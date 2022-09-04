@@ -39,14 +39,23 @@ SNOHOMISH <- filter(COUNTIES, state=="Washington" &
                       county=="Snohomish")
 View(SNOHOMISH)
 
-# Set n to legth of data set
+## steps to how many incremental cases have there been? 
+# -- 1 figure out how many rows there are via length 
+# Set n to length of data set
+# variable$date
 n <- length(SNOHOMISH$date)
 
+# -- 2 add new varible to data frame 
+#the new column is incr_cases (what's after the variable)
 # Initialize new variable in data frame
+#full of ones bc you know each time it increased by 1 at first, but will adjust in step 3 
 SNOHOMISH$incr_cases <- 1
 
 View(SNOHOMISH)
 
+# -- 3 use for loop to calculate the rest of the increments 
+# first parenthesis (argument) is the looping varible (what will be in the other part & when it will stop 
+#must start with row 2 bc if start with row 1 there's no data -- also already did row 1 
 # Calculate values for other than first row using FOR loop
 
 for (i in 2:n) {
