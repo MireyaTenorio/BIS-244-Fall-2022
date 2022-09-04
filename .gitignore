@@ -40,3 +40,6 @@ vignettes/*.pdf
 
 # Data Files
 *.csv
+*.xls
+*.xlsx
+*.matlab
