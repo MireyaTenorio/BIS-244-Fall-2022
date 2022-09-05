@@ -7,7 +7,9 @@
 # folder.
 
 # Clear out Console and Environment
+#this clears out environment
 rm(list=ls(all=TRUE))
+#this clears out console 
 cat("\014")
 
 # Let's read in the us-counties file from covid-19-data
@@ -27,9 +29,11 @@ COUNTIES <- read_csv("us-counties.csv")
 # Switching the working directory back to the project folder
 setwd(Temp)
 
+
+### Ignore above way and do below option 
 # Alternative way to access subfolders
-library(here)
-COUNTIES <- read_csv(here("covid-19-data","us-counties.csv"))
+library(here) #this tells you where the working directory is 
+COUNTIES <- read_csv(here("covid-19-data","us-counties.csv")) #now start there, and get the following subfolder, each quote is a sublevel
 
 # Examining the data
 View(COUNTIES)
@@ -41,7 +45,7 @@ View(SNOHOMISH)
 
 ## steps to how many incremental cases have there been? 
 # -- 1 figure out how many rows there are via length 
-# Set n to length of data set
+# Set n to length of data set --- n is basically each record 
 # variable$date
 n <- length(SNOHOMISH$date)
 
@@ -56,6 +60,7 @@ View(SNOHOMISH)
 # -- 3 use for loop to calculate the rest of the increments 
 # first parenthesis (argument) is the looping varible (what will be in the other part & when it will stop 
 #must start with row 2 bc if start with row 1 there's no data -- also already did row 1 
+#for the changes in the first day (row 2), calculate the changes of what it is today - yesterday 
 # Calculate values for other than first row using FOR loop
 
 for (i in 2:n) {
@@ -76,8 +81,12 @@ p + geom_point() +
        subtitle = "Data points are incremental new confirmed cases",
        caption = "Source: NY Times")
 
-# Let's replace 0 values with NA using IF..ELSE statement
+#the p+ is what makes everything be displayed 
+#have to graph the whole code to add everything to the console 
 
+#get upgly line in the bottom bc there are too many 0's 
+# Let's replace 0 values with NA using IF..ELSE statement
+#if i is equal to 0, then replace to NA, if not(else),leave it 
 for (i in 1:n) {
   if (SNOHOMISH$incr_cases[i]==0) {
     SNOHOMISH$incr_cases[i] <- NA
@@ -101,8 +110,10 @@ p + geom_point() +
 # Remember, we have replaced some value of incr_cases with NA, so...
 
 mean(SNOHOMISH$incr_cases)
+#can't do the mean bc there are N/A added 
 
 # There IS a workaround for some commands, such as mean()
+#basically saying remove the NA's below to check the mean 
 mean(SNOHOMISH$incr_cases, na.rm=TRUE)
 meancases <- mean(SNOHOMISH$incr_cases, na.rm=TRUE)
 
