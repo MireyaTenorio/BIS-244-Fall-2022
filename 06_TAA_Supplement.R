@@ -43,8 +43,9 @@ table(gss_sm$religion)
 # Use geom_bar() again, but specify x & color = religion in ggplot()
 
 p <- ggplot(data = gss_sm,
-            mapping = aes(x = religion, color = religion))
+            mapping = aes(x = religion, color = religion)) 
 p + geom_bar()
+#color doesn't show much because it only does the border - didn't matter with lines
 
 # Fill is "livelier" than color:
 
@@ -54,8 +55,7 @@ p + geom_bar()
 
 # But do we really need a legend in this case?
 
-p + geom_bar() + guides(fill = FALSE)
-
+p + geom_bar() + guides(fill = FALSE) #guides False makes it so the legend is deleted
 
 ## 4.5 Frequency Plots the Slightly Awkward Way
 

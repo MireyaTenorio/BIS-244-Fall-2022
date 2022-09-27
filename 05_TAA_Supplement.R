@@ -48,7 +48,7 @@ p <- ggplot(data = gapminder,
             mapping = aes(x = year,
                           y = gdpPercap))
 p + geom_line(mapping = 
-                    aes(group = country))       
+                    aes(group = country)) #here he is making one line per country   
 
 ## 4.3 Facet to Make Small Multiples
 p <- ggplot(data = gapminder,
@@ -56,15 +56,16 @@ p <- ggplot(data = gapminder,
                           y = gdpPercap))
 
 p + geom_line(mapping = aes(group = country)) + 
-    facet_wrap(~ continent)      
+    facet_wrap(~ continent)   #Makes a separate graph for each continent 
 
+# There are still lines for each country 
 # Note how the layout of the picture allows facets to share axes titles
 
 # Also note that "~ continent" is a powerful statement. For now, DON'T use it
 # on continuous variables, and be careful about using it Factors with a lot of levels.
 
 p + geom_line(mapping = aes(group = country)) + 
-  facet_wrap(~ country)      
+  facet_wrap(~ country)     #Messy as it makes a graph for each country
 
 # FIne-tuning facet_wrap() to specify 5 columns
 
@@ -83,6 +84,7 @@ p + geom_line(color="gray70", mapping=aes(group = country)) +
          title = "GDP per capita on Five Continents")      
 
 # Why did we specify "se = FALSE"?
+# this is because some outliers could really affect the average plotted
 
 # Healy switches to GSS data. Let's look at it:
 
