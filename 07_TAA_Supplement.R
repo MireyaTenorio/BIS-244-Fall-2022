@@ -16,36 +16,41 @@ rel_by_region <- gss_sm %>%
 
 # Let's see what we did
 
-gss_sm <- gss_sm
-View(gss_sm)
-View(rel_by_region)
+gss_sm <- gss_sm #assign it to itself so it shows up in environment
+View(gss_sm) 
+View(rel_by_region) #groups by the same religion and big region 
 
 
 # The code above is the same as 
 
-temp1 <- group_by(gss_sm, bigregion, religion)
+temp1 <- group_by(gss_sm, bigregion, religion) #grouping by big region and religion
 temp2 <- summarize(temp1, N = n())
 rel_by_region2 <- mutate(temp2, freq = N / sum(N), pct = round((freq*100), 0))
 
 
-# Look at gss_sm vs. temp1 to see what group_by does
-
+# Look at gss_sm vs. temp1 to see what group_by does 
 temp1
 gss_sm
+#they look almost the same, but temp1 specifically shows the groups 
+
 
 # Look at temp2
 
 temp2
+#this one just summarizes the results of the big region and religions 
 
 # Look at rel_by_reion vs. rel_by_region2
 
 View(rel_by_region)
 View(rel_by_region2)
 
+#rel_by_region2 is the same stuff rel_by_region, but we created it differently 
+
 # Yet a 3rd way to do the same thing:
 
 rel_by_region3 <- mutate(summarize(group_by(gss_sm, bigregion, religion),N = n()),
                          freq = N / sum(N), pct = round((freq*100), 0))
+
 
 
 # Back to our data
@@ -57,9 +62,14 @@ rel_by_region
 
 rel_by_region %>% group_by(bigregion) %>%
     summarize(total = sum(pct))      
+#summarize tells us the total for the summary of the percent by big region
+#some are not exactly 100 because of rounding 
 
+#below you see you actually don't need the group by 
+#it was already grouped 
 
-# Plotting our summarisation
+rel_by_region %>% summarize(total = sum(pct)) 
+# Plotting our summarisation 
 
 p <- ggplot(rel_by_region, aes(x = bigregion, y = pct, fill = religion))
 p + geom_col(position = "dodge2") +
@@ -67,6 +77,8 @@ p + geom_col(position = "dodge2") +
     theme(legend.position = "top")      
 
 # BTW, "dodge2" is a newer way with thinner columns of doing
+#dodge2 is a part of tidyverse and ggplot2 
+#dodge2 gives you better column spaces over dodge
 
 p + geom_col(position = "dodge") +
   labs(x = "Region",y = "Percent", fill = "Religion") +
@@ -81,6 +93,7 @@ p + geom_col(position = "dodge") +
   facet_grid(~ bigregion)      
 
 # ... and flippling the x- and y- axes....
+#flipping with coord_flip()
 
 p + geom_col(position = "dodge") +
     labs(x = NULL, y = "Percent", fill = "Religion") +
@@ -118,8 +131,9 @@ p <- ggplot(data = organdata,
 p + geom_line(aes(group = country)) + 
   facet_wrap(~ country)      
 
-
 # Let's summarize this one one graph using geom_boxplot()
+#this really shows the distribution of the data 
+#doesn't show data chronologically 
 p <- ggplot(data = organdata,
             mapping = aes(x = country, y = donors))
 p + geom_boxplot()      
@@ -187,6 +201,8 @@ by_country
 
 
 ## ----better_summarize-----------------------------------------------
+#same thing as above, but summarized
+# better if do it like above bc it's easier 
 by_country <- organdata %>% 
   group_by(consent_law, country) %>%
     summarize_if(is.numeric, 
